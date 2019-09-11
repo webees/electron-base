@@ -1,4 +1,4 @@
-# abckey-desktop
+# electron-base
 
 ## Project setup
 ```

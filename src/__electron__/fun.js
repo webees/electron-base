@@ -44,9 +44,6 @@ export function ipcMainOn() {
   })
 }
 
-/**
- * 创建主窗体
- */
 export function createWin() {
   let _win = null
   _win = new BrowserWindow({
@@ -56,8 +53,8 @@ export function createWin() {
     minHeight: 600,
     useContentSize: true,
     // zoomFactor: 0.5,
-    // resizable: false, // 禁止调整窗口大小
-    // frame: false, // 禁用边框
+    // resizable: false,
+    // frame: false,
     show: false,
     icon: global.__TRAY_ICON_1__,
     webPreferences: {
@@ -99,12 +96,12 @@ export function createTray() {
   global.__TRAY__ = _tray
 }
 
-export function blinkTray(_blink = true, _time = 0) {
+export function blinkTray(blink = true, time = 0) {
   let _tray = global.__TRAY__
   let _tray_id = global.__TRAY_ID__
   let _tray_status = global.__TRAY_STATUS__
   clearInterval(_tray_id)
-  if (!_blink) return
+  if (!blink) return
   _tray_id = setInterval(() => {
     if (_tray_status) {
       _tray.setImage(global.__TRAY_ICON_0__)
@@ -114,9 +111,9 @@ export function blinkTray(_blink = true, _time = 0) {
       _tray_status = 1
     }
   }, 500)
-  if (_time) {
+  if (time) {
     setTimeout(() => {
       clearInterval(_tray_id)
-    }, _time * 1000)
+    }, time * 1000)
   }
 }

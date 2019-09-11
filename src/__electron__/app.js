@@ -26,7 +26,7 @@ app.on('ready', async () => {
 
   if (process.env.NODE_ENV !== 'production') {
     globalShortcut.register('Shift+i', () => {
-      global._win.main.webContents.openDevTools()
+      global.__WIN__.webContents.openDevTools()
     })
   }
 })

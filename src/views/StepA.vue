@@ -30,7 +30,7 @@ export default {
     }
   },
   async mounted() {
-    this.clean() // 这里如果异步更新可能有bug
+    this.clean()
     this.checkVersion()
   },
   methods: {

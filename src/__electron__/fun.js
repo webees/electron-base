@@ -1,9 +1,9 @@
-;/ * __static * /
+; / * __static * /
 import { app, Tray, ipcMain, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 
 export function ipcMainOn() {
-  let _win = global.__WIN__
+  let _winMain = global.__WIN__.main
   ipcMain.on('APP_RELAUNCH', () => {
     app.relaunch({
       args: process.argv.slice(1).concat(['--relaunch'])
@@ -11,38 +11,38 @@ export function ipcMainOn() {
     app.exit(0)
   })
   ipcMain.on('MAINWIN_RELOAD', () => {
-    _win.reload()
+    _winMain.reload()
   })
   ipcMain.on('MAINWIN_CLOSE', () => {
     app.exit(0)
   })
   ipcMain.on('MAINWIN_MAX', () => {
-    if (_win.isMaximized()) {
-      _win.unmaximize()
+    if (_winMain.isMaximized()) {
+      _winMain.unmaximize()
     } else {
-      _win.maximize()
+      _winMain.maximize()
     }
   })
   ipcMain.on('MAINWIN_MINI', () => {
-    if (!_win.isMinimized()) {
-      _win.minimize()
+    if (!_winMain.isMinimized()) {
+      _winMain.minimize()
     }
   })
   ipcMain.on('MAINWIN_HIDE', () => {
-    if (_win.isVisible()) {
-      _win.hide()
+    if (_winMain.isVisible()) {
+      _winMain.hide()
     }
   })
   ipcMain.on('MAINWIN_SHOW', () => {
-    if (!_win.isVisible()) {
-      _win.show()
+    if (!_winMain.isVisible()) {
+      _winMain.show()
     }
   })
 }
 
 export function createWin() {
-  let _win = null
-  _win = new BrowserWindow({
+  let _winMain = null
+  _winMain = new BrowserWindow({
     width: 800,
     height: 600,
     minWidth: 800,
@@ -62,54 +62,58 @@ export function createWin() {
       nodeIntegrationInWorker: true
     }
   })
-  _win.setMenu(null)
+  _winMain.setMenu(null)
   if (process.env.WEBPACK_DEV_SERVER_URL) {
-    _win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) _win.webContents.openDevTools()
+    _winMain.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    if (!process.env.IS_TEST) _winMain.webContents.openDevTools()
   } else {
     createProtocol('app')
-    _win.loadURL('app://./index.html')
+    _winMain.loadURL('app://./index.html')
   }
-  _win.once('ready-to-show', () => {
-    _win.show()
+  _winMain.once('ready-to-show', () => {
+    _winMain.show()
   })
-  _win.on('closed', () => {
-    _win = null
+  _winMain.on('closed', () => {
+    _winMain = null
   })
 
-  global.__WIN__ = _win
+  global.__WIN__.main = _winMain
 }
 
 export function createTray() {
-  let _win = global.__WIN__
   let _tray = null
-  _tray = new Tray(global.__TRAY_ICON_1__)
-  _tray.setToolTip(global.__APP_NAME__)
+  let _winMain = global.__WIN__.main
+  let _trayIcon1 = global.__TRAY__.icon_1
+  let _appName = global.__APP__.name
+  _tray = new Tray(_trayIcon1)
+  _tray.setToolTip(_appName)
   _tray.on('click', () => {
     blinkTray(false)
-    _win.isVisible() ? _win.hide() : _win.show()
+    _winMain.isVisible() ? _winMain.hide() : _winMain.show()
   })
-  global.__TRAY__ = _tray
+  global.__TRAY__.obj = _tray
 }
 
 export function blinkTray(blink = true, time = 0) {
-  let _tray = global.__TRAY__
-  let _tray_id = global.__TRAY_ID__
-  let _tray_status = global.__TRAY_STATUS__
-  clearInterval(_tray_id)
+  let _tray = global.__TRAY__.obj
+  let _trayID = global.__TRAY__.id
+  let _trayStatus = global.__TRAY__.tatus
+  let _trayIcon0 = global.__TRAY__.icon_0
+  let _trayIcon1 = global.__TRAY__.icon_1
+  clearInterval(_trayID)
   if (!blink) return
-  _tray_id = setInterval(() => {
-    if (_tray_status) {
-      _tray.setImage(global.__TRAY_ICON_0__)
-      _tray_status = 0
+  _trayID = setInterval(() => {
+    if (_trayStatus) {
+      _tray.setImage(_trayIcon0)
+      _trayStatus = 0
     } else {
-      _tray.setImage(global.__TRAY_ICON_1__)
-      _tray_status = 1
+      _tray.setImage(_trayIcon1)
+      _trayStatus = 1
     }
   }, 500)
   if (time) {
     setTimeout(() => {
-      clearInterval(_tray_id)
+      clearInterval(_trayID)
     }, time * 1000)
   }
 }

@@ -1,25 +1,29 @@
 /* global __static */
 import { app, protocol, nativeImage } from 'electron'
 
-global.__WIN__ = null
-global.__TRAY__ = null
-
-global.__APP_NAME__ = ''
-global.__APP_EXEC__ = process.execPath.substring(0, process.execPath.lastIndexOf('\\'))
-global.__APP_VERS__ = app.getVersion()
-
-global.__TRAY_ID__ = 0
-global.__TRAY_ICON_0__ = nativeImage.createFromPath(__static + '/imgs/icon_0.ico')
-global.__TRAY_ICON_1__ = nativeImage.createFromPath(__static + '/imgs/icon_1.ico')
-global.__TRAY_STATUS__ = 1
+global.__WIN__ = {
+  main: null
+}
+global.__TRAY__ = {
+  obj: null,
+  id: 0,
+  status: 1,
+  icon_0: nativeImage.createFromPath(__static + '/imgs/icon_0.ico'),
+  icon_1: nativeImage.createFromPath(__static + '/imgs/icon_1.ico'),
+}
+global.__APP__ = {
+  name: '',
+  exec: process.execPath.substring(0, process.execPath.lastIndexOf('\\')),
+  vers: app.getVersion()
+}
 
 if (app.requestSingleInstanceLock()) {
-  let _win = global.__WIN__
+  let _winMain = global.__WIN__.main
   app.on('second-instance', () => {
-    if (_win) {
-      if (_win.isMinimized()) _win.restore()
-      if (!_win.isVisible()) _win.show()
-      _win.focus()
+    if (_winMain) {
+      if (_winMain.isMinimized()) _winMain.restore()
+      if (!_winMain.isVisible()) _winMain.show()
+      _winMain.focus()
     }
   })
 } else {

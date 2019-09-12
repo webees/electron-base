@@ -1,9 +1,5 @@
-import {
-  app,
-  Tray,
-  ipcMain,
-  BrowserWindow
-} from 'electron'
+;/ * __static * /
+import { app, Tray, ipcMain, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 
 export function ipcMainOn() {

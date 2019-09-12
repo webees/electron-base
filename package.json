@@ -1,5 +1,5 @@
 {
-  "name": "abckey-desktop",
+  "name": "electron-base",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,10 +13,19 @@
   },
   "main": "background.js",
   "dependencies": {
-    "core-js": "^3.2.1",
+    "@mdi/font": "^4.4.95",
+    "axios": "^0.19.0",
+    "compressing": "^1.4.0",
+    "core-js": "^2.6.5",
+    "got": "^9.6.0",
+    "hasha": "^5.0.0",
+    "roboto-fontface": "*",
     "vue": "^2.6.10",
+    "vue-i18n": "^8.14.0",
     "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
+    "vuetify": "^2.0.0",
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
@@ -25,13 +34,14 @@
     "@vue/eslint-config-prettier": "^5.0.0",
     "babel-eslint": "^10.0.1",
     "electron": "^5.0.0",
-    "eslint": "^6.3.0",
+    "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
     "prettier": "^1.18.2",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2",
+    "sass": "^1.18.0",
+    "sass-loader": "^8.0.0",
     "vue-cli-plugin-electron-builder": "^1.4.0",
+    "vue-cli-plugin-vuetify": "^0.6.3",
     "vue-template-compiler": "^2.6.10"
   }
 }

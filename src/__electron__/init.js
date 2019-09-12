@@ -1,3 +1,4 @@
+/* global __static */
 import { app, protocol, nativeImage } from 'electron'
 
 global.__WIN__ = null

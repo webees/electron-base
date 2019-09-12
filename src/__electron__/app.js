@@ -1,10 +1,6 @@
 import { installVueDevtools } from 'vue-cli-plugin-electron-builder/lib'
 import { app, globalShortcut } from 'electron'
-import {
-  createWin,
-  createTray,
-  ipcMainOn
-} from './fun'
+import { createWin, createTray, ipcMainOn } from './fun'
 
 app.on('ready', async () => {
   if (process.env.NODE_ENV !== 'production' && !process.env.IS_TEST) {
